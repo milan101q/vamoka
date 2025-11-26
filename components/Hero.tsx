@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, MapPin, Globe } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -33,9 +33,30 @@ export const Hero: React.FC = () => {
         <h1 className="text-6xl md:text-8xl font-serif font-bold text-brand-900 mb-6 leading-none animate-slide-up drop-shadow-sm tracking-tight">
           Vamoka
         </h1>
-        <p className="text-xl md:text-2xl font-serif text-brand-900 mb-10 max-w-2xl mx-auto leading-relaxed animate-slide-up font-medium" style={{ animationDelay: '0.2s', textShadow: '0 1px 1px rgba(255,255,255,0.6)' }}>
-          Bringing beauty and warmth to your space with handmade modern decorative art. Based in Virginia and shipping worldwide, we offer custom sizes to perfectly fit your unique vision.
-        </p>
+        
+        {/* Enhanced Visibility Text Box */}
+        <div className="bg-white/40 backdrop-blur-md p-6 rounded-xl border border-white/50 shadow-sm mb-10 max-w-3xl mx-auto animate-slide-up transform transition-all hover:bg-white/50" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl md:text-2xl font-serif text-brand-900 leading-relaxed font-medium">
+            Bringing beauty and warmth to your space with handmade modern decorative art.
+          </p>
+          
+          <div className="my-5 h-px bg-gradient-to-r from-transparent via-brand-900/40 to-transparent w-3/4 mx-auto"></div>
+          
+          <div className="flex flex-col md:flex-row justify-center items-center gap-3 text-brand-900">
+            <span className="font-sans font-semibold tracking-wide flex items-center gap-2">
+              <MapPin size={18} className="text-brand-700" /> Based in Virginia
+            </span>
+            <span className="hidden md:inline text-brand-500">•</span>
+            <span className="font-sans font-bold text-lg tracking-wide flex items-center gap-2 bg-brand-100/50 px-3 py-1 rounded-full border border-brand-200">
+              <Globe size={18} className="text-brand-700" /> Worldwide Shipping
+            </span>
+          </div>
+          
+          <p className="text-lg font-serif text-brand-800 mt-4 italic">
+            We offer custom sizes to perfectly fit your unique vision.
+          </p>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up font-sans" style={{ animationDelay: '0.4s' }}>
           <a 
             href="#gallery" 
