@@ -64,16 +64,14 @@
       window.process = { env: { API_KEY: '' } };
     </script>
     
-    <!-- Import Map: STRICTLY React 18 to avoid conflicts -->
+    <!-- Import Map: FIXED to use consistent React 18 versions -->
     <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "@google/genai": "https://esm.sh/@google/genai@0.1.1",
-    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1"
   }
 }
 </script>
@@ -105,7 +103,8 @@
     <!-- Main Application Script -->
     <script type="text/babel" data-presets="react" data-type="module">
       import React, { useState, useEffect, useRef } from 'react';
-      import ReactDOM from 'react-dom/client';
+      // FIXED: Use named import for createRoot
+      import { createRoot } from 'react-dom/client';
       import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Send, Loader2, Heart } from 'lucide-react';
       import { GoogleGenAI } from "@google/genai";
 
@@ -903,7 +902,8 @@
         throw new Error("Could not find root element to mount to");
       }
 
-      const root = ReactDOM.createRoot(rootElement);
+      // FIXED: Use createRoot directly
+      const root = createRoot(rootElement);
       root.render(
         <React.StrictMode>
           <App />
