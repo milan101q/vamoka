@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
@@ -70,7 +71,6 @@
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "@google/generative-ai": "https://esm.sh/@google/generative-ai@0.21.0",
     "lucide-react": "https://esm.sh/lucide-react@0.263.1?deps=react@18.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
@@ -110,16 +110,9 @@
     <script type="text/babel" data-presets="react" data-type="module">
       import React, { useState, useEffect, useRef } from 'react';
       import { createRoot } from 'react-dom/client';
-      import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Send, Loader2, Heart } from 'lucide-react';
-      import { GoogleGenerativeAI } from "@google/generative-ai";
+      import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Heart } from 'lucide-react';
 
       // --- CONSTANTS ---
-
-      const ChatState = {
-        IDLE: 'IDLE',
-        LOADING: 'LOADING',
-        ERROR: 'ERROR'
-      };
 
       const MOCK_PRODUCTS = [
         {
@@ -270,55 +263,6 @@
           description: 'A captured moment of artistic inspiration.'
         }
       ];
-
-      const SYSTEM_INSTRUCTION = `
-      You are the "Art Curator AI" for Vamoka Art Adventures. 
-      Your goal is to help visitors find the perfect art piece for their home.
-      Be friendly, artistic, and sophisticated.
-
-      Key Brand Details to Emphasize:
-      - **Philosophy**: Vamoka creates unique Handmade Modern Decorative Art.
-      - **Location**: Based in Virginia, USA.
-      - **Services**: We offer Worldwide Shipping and Custom Sizes to fit any space.
-      - **Mission**: Bringing beauty and warmth to your space.
-
-      Use the provided product list to make specific recommendations.
-      If a user asks about the brand, emphasize the details above (Handmade, Virginia-based, Custom options).
-
-      Here is the current content catalog:
-      ${JSON.stringify(MOCK_PRODUCTS.map(p => ({ title: p.title, category: p.category, description: p.description })))}
-
-      When recommending a piece, mention its title and the feeling it evokes.
-      Keep responses concise (under 100 words).
-      `;
-
-      // --- SERVICES ---
-      
-      const apiKey = process.env.API_KEY || '';
-      // Initializing the standard Web SDK
-      const genAI = new GoogleGenerativeAI(apiKey);
-
-      const sendMessageToGemini = async (history, newMessage) => {
-        try {
-          const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
-            systemInstruction: SYSTEM_INSTRUCTION 
-          });
-          
-          const chat = model.startChat({
-            history: history.map(msg => ({
-              role: msg.role === 'model' ? 'model' : 'user',
-              parts: [{ text: msg.text }]
-            }))
-          });
-
-          const result = await chat.sendMessage(newMessage);
-          return result.response.text();
-        } catch (error) {
-          console.error("Gemini API Error:", error);
-          throw new Error("Failed to get response from Gemini");
-        }
-      };
 
       // --- COMPONENTS ---
 
@@ -530,7 +474,7 @@
         const embedUrl = getEmbedUrl(product.instagramUrl);
 
         return (
-          <div className="group relative bg-white border border-brand-100 overflow-hidden hover:shadow-2xl transition-all duration-300 rounded-xl flex flex-col h-full">
+          <div className="group relative bg-white border border-brand-100 overflow-hidden hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 rounded-xl flex flex-col h-full">
             <div className="relative w-full aspect-[9/16] bg-brand-50 border-b border-brand-50">
               <iframe 
                 src={embedUrl}
@@ -687,7 +631,7 @@
 
                     <div className="flex items-start gap-4">
                         <div className="p-2 bg-white rounded-lg shadow-sm text-brand-600">
-                          <Sparkles size={20} />
+                          <Heart size={20} />
                         </div>
                         <div>
                             <h4 className="font-bold text-brand-900 text-xs uppercase tracking-widest mb-1">Beauty & Warmth</h4>
@@ -719,132 +663,6 @@
               </div>
             </div>
           </section>
-        );
-      };
-
-      const ChatAssistant = () => {
-        const [isOpen, setIsOpen] = useState(false);
-        const [messages, setMessages] = useState([
-          { role: 'model', text: "Hello! I'm your Art Curator AI. Tell me about your space or what inspires you, and I'll recommend a piece from the Vamoka collection." }
-        ]);
-        const [input, setInput] = useState('');
-        const [chatState, setChatState] = useState(ChatState.IDLE);
-        const messagesEndRef = useRef(null);
-
-        const scrollToBottom = () => {
-          messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-        };
-
-        useEffect(() => {
-          if (isOpen) {
-            scrollToBottom();
-          }
-        }, [messages, isOpen]);
-
-        const handleSend = async (e) => {
-          e.preventDefault();
-          if (!input.trim() || chatState === ChatState.LOADING) return;
-
-          const userMessage = { role: 'user', text: input };
-          const currentHistory = [...messages]; 
-          
-          setMessages(prev => [...prev, userMessage]);
-          setInput('');
-          setChatState(ChatState.LOADING);
-
-          try {
-            const responseText = await sendMessageToGemini(currentHistory, input);
-            setMessages(prev => [...prev, { role: 'model', text: responseText }]);
-            setChatState(ChatState.IDLE);
-          } catch (error) {
-            console.error("Chat Error:", error);
-            setMessages(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting to the art server right now.", isError: true }]);
-            setChatState(ChatState.ERROR);
-          }
-        };
-
-        return (
-          <>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-2xl transition-all duration-300 flex items-center gap-2 ${
-                isOpen ? 'bg-brand-900 rotate-90 scale-0 opacity-0' : 'bg-brand-800 hover:bg-brand-700 text-white scale-100 opacity-100'
-              }`}
-            >
-              <Sparkles size={24} />
-            </button>
-
-            <div 
-              className={`fixed bottom-6 right-6 z-50 w-full max-w-[360px] bg-white rounded-2xl shadow-2xl border border-brand-100 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${
-                isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none translate-y-10'
-              }`}
-              style={{ height: '500px', maxHeight: '80vh' }}
-            >
-              <div className="bg-brand-900 p-4 flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="text-brand-300" size={18} />
-                  <div>
-                    <h3 className="text-white font-medium text-sm tracking-wide font-sans">Art Curator AI</h3>
-                    <p className="text-brand-300 text-xs font-sans">Powered by Gemini</p>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => setIsOpen(false)}
-                  className="text-brand-300 hover:text-white transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-brand-50 font-sans">
-                {messages.map((msg, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div 
-                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                        msg.role === 'user' 
-                          ? 'bg-brand-800 text-white rounded-br-none' 
-                          : 'bg-white text-brand-900 border border-brand-100 rounded-bl-none shadow-sm'
-                      } ${msg.isError ? 'bg-red-50 text-red-600 border-red-200' : ''}`}
-                    >
-                      {msg.text}
-                    </div>
-                  </div>
-                ))}
-                {chatState === ChatState.LOADING && (
-                  <div className="flex justify-start">
-                     <div className="bg-white text-brand-900 border border-brand-100 rounded-2xl rounded-bl-none shadow-sm px-4 py-3 flex items-center gap-2">
-                       <Loader2 className="animate-spin text-brand-500" size={16} />
-                       <span className="text-xs text-brand-500">Curating...</span>
-                     </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-
-              <form onSubmit={handleSend} className="p-4 bg-white border-t border-brand-100">
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Suggest something for a cozy bedroom..."
-                    className="w-full pl-4 pr-12 py-3 bg-brand-50 border border-brand-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm text-brand-900 placeholder-brand-400 font-sans"
-                    disabled={chatState === ChatState.LOADING}
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || chatState === ChatState.LOADING}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-brand-500 hover:text-brand-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    <Send size={18} />
-                  </button>
-                </div>
-              </form>
-            </div>
-          </>
         );
       };
 
@@ -898,7 +716,6 @@
               <About />
             </main>
             <Footer />
-            <ChatAssistant />
           </div>
         );
       }

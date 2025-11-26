@@ -24,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const embedUrl = getEmbedUrl(product.instagramUrl);
 
   return (
-    <div className="group relative bg-white border border-brand-100 overflow-hidden hover:shadow-2xl transition-all duration-300 rounded-xl flex flex-col h-full">
+    <div className="group relative bg-white border border-brand-100 overflow-hidden hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 rounded-xl flex flex-col h-full">
       {/* Instagram Iframe Container */}
       <div className="relative w-full aspect-[9/16] bg-brand-50 border-b border-brand-50">
         <iframe 
