@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
 
@@ -15,18 +16,18 @@ export const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img 
-          src="https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&q=80&w=2832" 
-          alt="Abstract Textured Art Background" 
+          src="https://images.unsplash.com/photo-1578926288207-a90a53623322?auto=format&fit=crop&q=80&w=2758" 
+          alt="Abstract Artistic Fluid Background" 
           className="w-full h-full object-cover"
         />
-        {/* Lighter overlay to ensure dark text pops */}
-        <div className="absolute inset-0 bg-white/60"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-50/50 via-transparent to-brand-50"></div>
+        {/* Overlays to ensure text readability */}
+        <div className="absolute inset-0 bg-white/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-50/70 via-white/20 to-brand-50"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <span className="inline-block py-1 px-3 border border-brand-900/30 rounded-full bg-white/60 backdrop-blur-md text-brand-900 text-xs font-bold uppercase tracking-[0.2em] mb-6 animate-fade-in shadow-sm">
+        <span className="inline-block py-1 px-3 border border-brand-900/40 rounded-full bg-white/70 backdrop-blur-md text-brand-900 text-xs font-bold uppercase tracking-[0.2em] mb-6 animate-fade-in shadow-sm font-sans">
           Handmade • Modern • Decorative
         </span>
         <h1 className="text-5xl md:text-7xl font-serif text-brand-900 mb-6 leading-tight animate-slide-up drop-shadow-sm">

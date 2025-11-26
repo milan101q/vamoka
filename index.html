@@ -72,9 +72,9 @@
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "@google/generative-ai": "https://esm.sh/@google/generative-ai@0.21.0",
     "lucide-react": "https://esm.sh/lucide-react@0.263.1?deps=react@18.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
   }
 }
 </script>
@@ -474,23 +474,24 @@
             {/* Background Image with Overlay */}
             <div className="absolute inset-0">
               <img 
-                src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&q=80&w=2832" 
-                alt="Abstract Textured Art Background" 
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2564" 
+                alt="Professional Artistic Liquid Gold and Black Abstract" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-white/60"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-brand-50/50 via-transparent to-brand-50"></div>
+              {/* Overlays to ensure text readability */}
+              <div className="absolute inset-0 bg-white/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-50/80 via-transparent to-brand-50"></div>
             </div>
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-              <span className="inline-block py-1 px-3 border border-brand-900/30 rounded-full bg-white/60 backdrop-blur-md text-brand-900 text-xs font-bold uppercase tracking-[0.2em] mb-6 animate-fade-in shadow-sm font-sans">
+              <span className="inline-block py-1 px-3 border border-brand-900/60 rounded-full bg-white/80 backdrop-blur-md text-brand-900 text-xs font-bold uppercase tracking-[0.2em] mb-6 animate-fade-in shadow-sm font-sans">
                 Handmade • Modern • Decorative
               </span>
               <h1 className="text-6xl md:text-8xl font-serif font-bold text-brand-900 mb-6 leading-none animate-slide-up drop-shadow-sm tracking-tight">
                 Vamoka
               </h1>
-              <p className="text-xl md:text-2xl font-serif text-brand-800 mb-10 max-w-2xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <p className="text-xl md:text-2xl font-serif text-brand-900 mb-10 max-w-2xl mx-auto leading-relaxed animate-slide-up font-medium" style={{ animationDelay: '0.2s', textShadow: '0 1px 1px rgba(255,255,255,0.6)' }}>
                 Bringing beauty and warmth to your space with handmade modern decorative art. Based in Virginia and shipping worldwide, we offer custom sizes to perfectly fit your unique vision.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up font-sans" style={{ animationDelay: '0.4s' }}>
