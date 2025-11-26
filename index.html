@@ -74,7 +74,7 @@
     <div id="root"></div>
 
     <!-- MAIN APPLICATION SCRIPT -->
-    <script type="text/babel" data-type="module">
+    <script type="text/babel" data-type="module" data-presets="env,react">
       import React, { useState, useEffect, useRef } from 'react';
       import { createRoot } from 'react-dom/client';
       import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Send, Loader2, Heart } from 'lucide-react';
@@ -284,7 +284,8 @@
           return result.text || "I'm having trouble connecting to the art muse right now. Please try again.";
         } catch (error) {
           console.error("Gemini API Error:", error);
-          throw new Error("Failed to get response from Gemini");
+          // throw new Error("Failed to get response from Gemini"); // Fail silently for demo if no key
+          return "I'm currently offline (API Key missing). Please check back later!";
         }
       };
 
