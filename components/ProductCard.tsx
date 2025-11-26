@@ -50,26 +50,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="absolute inset-0 pointer-events-none group-hover:bg-black/10 transition-colors" />
       </div>
       
-      <div className="p-5 bg-white flex flex-col flex-grow relative z-10">
-        <div className="flex justify-between items-start mb-2">
-          <span className="inline-block px-2 py-1 bg-brand-50 text-brand-600 text-[10px] uppercase tracking-widest font-bold rounded-sm font-sans">
-            {product.category}
-          </span>
-        </div>
-        
-        <h3 className="text-xl font-serif text-brand-900 mb-2 leading-tight">
-          {product.title}
-        </h3>
-        
-        <p className="text-brand-700 text-xs leading-relaxed mb-4 line-clamp-3 flex-grow font-sans">
-          {product.description}
-        </p>
-        
+      {/* Minimal Footer - Just the Button */}
+      <div className="p-4 bg-white relative z-10 mt-auto">
         <a 
           href={product.instagramUrl} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 py-3 bg-brand-900 text-brand-50 uppercase text-xs tracking-widest font-bold hover:bg-brand-700 transition-colors rounded-lg mt-auto shadow-md font-sans"
+          className="w-full flex items-center justify-center gap-2 py-3 bg-brand-900 text-brand-50 uppercase text-xs tracking-widest font-bold hover:bg-brand-700 transition-colors rounded-lg shadow-md font-sans"
         >
           <Instagram size={14} /> View Artwork <ArrowUpRight size={14} />
         </a>
