@@ -64,14 +64,17 @@
       window.process = { env: { API_KEY: '' } };
     </script>
     
-    <!-- Import Map: FIXED to use consistent React 18 versions -->
+    <!-- Import Map: Switched to @google/generative-ai for browser compatibility -->
     <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
-    "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+    "@google/generative-ai": "https://esm.sh/@google/generative-ai@0.21.0",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
   }
 }
 </script>
@@ -103,10 +106,9 @@
     <!-- Main Application Script -->
     <script type="text/babel" data-presets="react" data-type="module">
       import React, { useState, useEffect, useRef } from 'react';
-      // FIXED: Use named import for createRoot
       import { createRoot } from 'react-dom/client';
       import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Send, Loader2, Heart } from 'lucide-react';
-      import { GoogleGenAI } from "@google/genai";
+      import { GoogleGenerativeAI } from "@google/generative-ai";
 
       // --- CONSTANTS ---
 
@@ -290,25 +292,25 @@
       // --- SERVICES ---
       
       const apiKey = process.env.API_KEY || '';
-      const ai = new GoogleGenAI({ apiKey });
+      // Initializing the standard Web SDK
+      const genAI = new GoogleGenerativeAI(apiKey);
 
       const sendMessageToGemini = async (history, newMessage) => {
         try {
-          const model = 'gemini-2.5-flash';
+          const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash",
+            systemInstruction: SYSTEM_INSTRUCTION 
+          });
           
-          const chat = ai.chats.create({
-            model,
-            config: {
-              systemInstruction: SYSTEM_INSTRUCTION,
-            },
+          const chat = model.startChat({
             history: history.map(msg => ({
-              role: msg.role,
+              role: msg.role === 'model' ? 'model' : 'user',
               parts: [{ text: msg.text }]
             }))
           });
 
-          const result = await chat.sendMessage({ message: newMessage });
-          return result.text || "I'm having trouble connecting to the art muse right now. Please try again.";
+          const result = await chat.sendMessage(newMessage);
+          return result.response.text();
         } catch (error) {
           console.error("Gemini API Error:", error);
           throw new Error("Failed to get response from Gemini");
@@ -902,7 +904,6 @@
         throw new Error("Could not find root element to mount to");
       }
 
-      // FIXED: Use createRoot directly
       const root = createRoot(rootElement);
       root.render(
         <React.StrictMode>
