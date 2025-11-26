@@ -54,16 +54,17 @@
     </script>
 
     <!-- 2. Babel for in-browser JSX transformation -->
+    <!-- data-presets="react" ONLY to preserve ES modules and avoid 'require' errors -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- 3. Import Map for Modules -->
     <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
-    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
+    "react": "https://esm.sh/react@18.2.0?bundle",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?bundle",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0?bundle",
+    "@google/genai": "https://esm.sh/@google/genai@0.1.1?bundle",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
@@ -74,7 +75,7 @@
     <div id="root"></div>
 
     <!-- MAIN APPLICATION SCRIPT -->
-    <script type="text/babel" data-type="module" data-presets="env,react">
+    <script type="text/babel" data-type="module" data-presets="react">
       import React, { useState, useEffect, useRef } from 'react';
       import { createRoot } from 'react-dom/client';
       import { Menu, X, Instagram, ArrowDown, ArrowUpRight, Play, ArrowRight, Palette, MapPin, Maximize, Sparkles, Send, Loader2, Heart } from 'lucide-react';
@@ -263,10 +264,12 @@
 
       // --- SERVICE: GEMINI ---
       const apiKey = window.process?.env?.API_KEY || '';
-      const ai = new GoogleGenAI({ apiKey });
+      // Initialize lazily or in function to avoid immediate errors if key is missing
+      const createAI = () => new GoogleGenAI({ apiKey });
 
       const sendMessageToGemini = async (history, newMessage) => {
         try {
+          const ai = createAI();
           const model = 'gemini-2.5-flash';
           
           const chat = ai.chats.create({
@@ -284,7 +287,6 @@
           return result.text || "I'm having trouble connecting to the art muse right now. Please try again.";
         } catch (error) {
           console.error("Gemini API Error:", error);
-          // throw new Error("Failed to get response from Gemini"); // Fail silently for demo if no key
           return "I'm currently offline (API Key missing). Please check back later!";
         }
       };
@@ -434,6 +436,7 @@
                 alt="Abstract Textured Art Background" 
                 className="w-full h-full object-cover"
               />
+              {/* Lighter overlay to ensure dark text pops */}
               <div className="absolute inset-0 bg-white/60"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-brand-50/50 via-transparent to-brand-50"></div>
             </div>
@@ -467,6 +470,7 @@
               </div>
             </div>
 
+            {/* Scroll Indicator */}
             <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-brand-900/70">
               <ArrowDown size={24} />
             </div>
@@ -477,9 +481,14 @@
       // --- COMPONENT: ProductCard ---
       const ProductCard = ({ product }) => {
         const getEmbedUrl = (url) => {
+          // Extract ID from URL (e.g., https://www.instagram.com/reel/CODE/ or /p/CODE/)
           const match = url.match(/(?:p|reel)\/([a-zA-Z0-9_-]+)/);
           const id = match ? match[1] : '';
+          
+          // Determine type based on URL or default to 'p' (which works for most)
           const type = url.includes('/reel/') ? 'reel' : 'p';
+          
+          // Use the embed endpoint
           return id ? `https://www.instagram.com/${type}/${id}/embed/` : url;
         };
 
@@ -487,6 +496,7 @@
 
         return (
           <div className="group relative bg-white border border-brand-100 overflow-hidden hover:shadow-2xl transition-all duration-300 rounded-xl flex flex-col h-full">
+            {/* Instagram Iframe Container */}
             <div className="relative w-full aspect-[9/16] bg-brand-50 border-b border-brand-50">
               <iframe 
                 src={embedUrl}
@@ -498,6 +508,8 @@
                 loading="lazy"
                 title={product.title}
               ></iframe>
+              
+              {/* Fallback/Overlay for interaction */}
               <div className="absolute inset-0 pointer-events-none group-hover:bg-black/10 transition-colors" />
             </div>
             
@@ -857,13 +869,17 @@
       };
 
       // --- MOUNTING ---
-      const rootElement = document.getElementById('root');
-      const root = createRoot(rootElement);
-      root.render(
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      );
+      try {
+        const rootElement = document.getElementById('root');
+        const root = createRoot(rootElement);
+        root.render(
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        );
+      } catch (err) {
+        console.error("Failed to mount React app:", err);
+      }
     </script>
   </body>
 </html>
