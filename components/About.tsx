@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Instagram, ArrowRight, Palette, MapPin, Maximize, Heart, Loader2 } from 'lucide-react';
+import { Instagram, ArrowRight, Palette, MapPin, Maximize, Heart } from 'lucide-react';
 
 export const About: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,8 +28,8 @@ export const About: React.FC = () => {
           <div className="order-2 lg:order-1 relative">
              <div className="relative rounded-xl overflow-hidden shadow-2xl border-4 border-white aspect-[9/16] max-w-sm mx-auto lg:mx-0">
                {isLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-brand-200/50 backdrop-blur-sm z-10">
-                     <Loader2 className="animate-spin text-brand-500" size={40} />
+                  <div className="absolute inset-0 z-10 bg-gradient-to-br from-brand-100 via-white to-brand-100 animate-pulse flex items-center justify-center">
+                     <span className="font-serif italic text-6xl text-brand-300">V</span>
                   </div>
                )}
                {/* Embed the Real Video */}

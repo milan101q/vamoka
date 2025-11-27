@@ -109,7 +109,7 @@
       }
     </script>
     
-    <!-- Import Map: STRICTLY React 18 only to prevent crashes on GitHub Pages -->
+    <!-- Import Map: STRICTLY React 18 only. Removed conflicting entries. -->
     <script type="importmap">
 {
   "imports": {
@@ -201,7 +201,6 @@
           instagramUrl: 'https://www.instagram.com/reel/DPmT6aDgEje/',
           description: 'The hushed quiet of a snow-covered landscape expressed through white-on-white heavy texture.'
         },
-        /* Removed ID 7 (Autumn Rhythm) as requested */
         {
           id: '8',
           title: 'Ascent',
@@ -546,8 +545,8 @@
             {/* Instagram Iframe Container */}
             <div className="relative w-full aspect-[9/16] bg-brand-50 border-b border-brand-50 overflow-hidden">
               {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-brand-100/50 backdrop-blur-sm z-10">
-                    <Loader2 className="animate-spin text-brand-400" size={24} />
+                <div className="absolute inset-0 z-10 bg-gradient-to-br from-brand-50 via-brand-100 to-brand-50 animate-pulse flex items-center justify-center">
+                    <span className="font-serif italic text-4xl text-brand-200">V</span>
                 </div>
               )}
               {/* CROPPING MAGIC:
@@ -637,8 +636,8 @@
                 <div className="order-2 lg:order-1 relative">
                    <div className="relative rounded-xl overflow-hidden shadow-2xl border-4 border-white aspect-[9/16] max-w-sm mx-auto lg:mx-0">
                      {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-brand-200/50 backdrop-blur-sm z-10">
-                           <Loader2 className="animate-spin text-brand-500" size={40} />
+                        <div className="absolute inset-0 z-10 bg-gradient-to-br from-brand-100 via-white to-brand-100 animate-pulse flex items-center justify-center">
+                           <span className="font-serif italic text-6xl text-brand-300">V</span>
                         </div>
                      )}
                      <iframe 

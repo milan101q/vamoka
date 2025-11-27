@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { ArrowUpRight, Instagram, Loader2 } from 'lucide-react';
+import { ArrowUpRight, Instagram } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -30,8 +30,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Instagram Iframe Container */}
       <div className="relative w-full aspect-[9/16] bg-brand-50 border-b border-brand-50 overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-brand-100/50 backdrop-blur-sm z-10">
-              <Loader2 className="animate-spin text-brand-400" size={24} />
+          <div className="absolute inset-0 z-10 bg-gradient-to-br from-brand-50 via-brand-100 to-brand-50 animate-pulse flex items-center justify-center">
+               <span className="font-serif italic text-4xl text-brand-200">V</span>
           </div>
         )}
         {/* CROPPING MAGIC:
