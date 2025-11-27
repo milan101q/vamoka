@@ -3,10 +3,59 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Primary Meta Tags -->
+    <title>Vamoka Art Adventures | Handmade Modern Decorative Art</title>
+    <meta name="title" content="Vamoka Art Adventures | Handmade Modern Decorative Art">
+    <meta name="description" content="Discover unique handmade modern decorative art by Vamoka. Based in Virginia, offering worldwide shipping and custom sizes. Shop textured, abstract, and gold leaf wall art for your home.">
+    <meta name="keywords" content="Handmade Art, Modern Decorative Art, Abstract Art, Textured Art, Wall Decor, Virginia Artist, Custom Art Sizes, Gold Leaf Art, Interior Design, Vamoka">
+    <meta name="author" content="Vamoka Art Adventures">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vamoka.artadventures/">
+    <meta property="og:title" content="Vamoka Art Adventures | Handmade Modern Decorative Art">
+    <meta property="og:description" content="Bringing beauty and warmth to your space with handmade modern decorative art. Based in Virginia and shipping worldwide.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&q=80&w=2574">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vamoka.artadventures/">
+    <meta property="twitter:title" content="Vamoka Art Adventures | Handmade Modern Decorative Art">
+    <meta property="twitter:description" content="Bringing beauty and warmth to your space with handmade modern decorative art. Based in Virginia and shipping worldwide.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&q=80&w=2574">
+
     <!-- Custom Artistic Favicon (Stylized V) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='30' fill='%23a67c52'/%3E%3Ctext x='50' y='70' font-family='serif' font-size='60' font-weight='bold' font-style='italic' fill='white' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vamoka Art Adventures</title>
+    
+    <!-- JSON-LD Structured Data for Local Business/Art Gallery -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HomeGoodsStore",
+      "name": "Vamoka Art Adventures",
+      "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&q=80&w=2574",
+      "description": "Handmade modern decorative art based in Virginia. We offer unique textured abstract art, worldwide shipping, and custom sizes.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "VA",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.4316,
+        "longitude": -78.6569
+      },
+      "url": "https://vamoka.artadventures/",
+      "sameAs": [
+        "https://www.instagram.com/vamoka.artadventures/"
+      ],
+      "priceRange": "$$"
+    }
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -249,6 +298,13 @@
           title: 'Artistic Vision',
           category: 'Gallery',
           instagramUrl: 'https://www.instagram.com/p/DJXoMMcRDr3/',
+          description: 'A captured moment of artistic inspiration, ready to transform your space.'
+        },
+        {
+          id: '22',
+          title: 'Artistic Vision',
+          category: 'Gallery',
+          instagramUrl: 'https://www.instagram.com/p/DNtHRQaQE2a/',
           description: 'A captured moment of artistic inspiration, ready to transform your space.'
         }
       ];
@@ -559,7 +615,7 @@
 
       const About = () => {
         const [isLoading, setIsLoading] = useState(true);
-        const featuredReelId = "DMbgDJ4R4t3"; 
+        const featuredReelId = "DJNuXy5R_5D"; 
         const embedUrl = `https://www.instagram.com/reel/${featuredReelId}/embed/`;
 
         const scrollToGallery = (e) => {

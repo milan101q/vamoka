@@ -1,9 +1,11 @@
-import React from 'react';
-import { Instagram, ArrowRight, Palette, MapPin, Maximize, Sparkles } from 'lucide-react';
+
+import React, { useState } from 'react';
+import { Instagram, ArrowRight, Palette, MapPin, Maximize, Heart, Loader2 } from 'lucide-react';
 
 export const About: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   // Using one of the provided "Process/Art" reels for the About section
-  const featuredReelId = "DMbgDJ4R4t3"; 
+  const featuredReelId = "DJNuXy5R_5D"; 
   const embedUrl = `https://www.instagram.com/reel/${featuredReelId}/embed/`;
 
   const scrollToGallery = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -25,10 +27,16 @@ export const About: React.FC = () => {
           
           <div className="order-2 lg:order-1 relative">
              <div className="relative rounded-xl overflow-hidden shadow-2xl border-4 border-white aspect-[9/16] max-w-sm mx-auto lg:mx-0">
+               {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-brand-200/50 backdrop-blur-sm z-10">
+                     <Loader2 className="animate-spin text-brand-500" size={40} />
+                  </div>
+               )}
                {/* Embed the Real Video */}
                <iframe 
                   src={embedUrl}
-                  className="w-full h-full"
+                  onLoad={() => setIsLoading(false)}
+                  className={`w-full h-full transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                   style={{ minHeight: '600px' }}
                   frameBorder="0" 
                   scrolling="no" 
@@ -41,12 +49,12 @@ export const About: React.FC = () => {
           </div>
 
           <div className="order-1 lg:order-2">
-            <span className="text-brand-500 font-bold tracking-[0.2em] text-sm uppercase mb-2 block">Our Story</span>
+            <span className="text-brand-500 font-bold tracking-[0.2em] text-xs uppercase mb-2 block font-sans">Our Story</span>
             <h2 className="text-4xl md:text-5xl font-serif text-brand-900 mb-6 leading-tight">
               Bringing Beauty & Warmth <br/> to Your <span className="text-brand-600 italic">Space</span>
             </h2>
             
-            <div className="prose text-brand-800 text-lg leading-relaxed font-light mb-8">
+            <div className="prose text-brand-800 text-lg leading-relaxed font-light mb-8 font-sans">
               <p className="mb-4">
                 <strong>Vamoka Art Adventures</strong> is more than just a gallery; it is a journey into the wild, reimagined for the modern home. 
               </p>
@@ -59,7 +67,7 @@ export const About: React.FC = () => {
             </div>
 
             {/* Feature Grid - Enhanced with specific Bio details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8 mb-10 border-t border-brand-200 pt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8 mb-10 border-t border-brand-200 pt-8 font-sans">
               <div className="flex items-start gap-4">
                   <div className="p-2 bg-white rounded-lg shadow-sm text-brand-600">
                     <Palette size={20} />
@@ -92,7 +100,7 @@ export const About: React.FC = () => {
 
               <div className="flex items-start gap-4">
                   <div className="p-2 bg-white rounded-lg shadow-sm text-brand-600">
-                    <Sparkles size={20} />
+                    <Heart size={20} />
                   </div>
                   <div>
                       <h4 className="font-bold text-brand-900 text-xs uppercase tracking-widest mb-1">Beauty & Warmth</h4>
@@ -101,12 +109,12 @@ export const About: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 font-sans">
               <a 
                 href="https://www.instagram.com/vamoka.artadventures/" 
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-brand-900 text-brand-50 hover:bg-brand-800 transition-colors uppercase tracking-widest text-sm font-bold shadow-lg hover:shadow-xl rounded-sm"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-brand-900 text-brand-50 hover:bg-brand-800 transition-colors uppercase tracking-widest text-xs font-bold shadow-lg hover:shadow-xl rounded-sm"
               >
                 <Instagram size={18} />
                 Contact on Instagram
@@ -114,7 +122,7 @@ export const About: React.FC = () => {
               <a 
                 href="#gallery" 
                 onClick={scrollToGallery}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-brand-900 text-brand-900 hover:bg-brand-100 transition-colors uppercase tracking-widest text-sm font-bold rounded-sm cursor-pointer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-brand-900 text-brand-900 hover:bg-brand-100 transition-colors uppercase tracking-widest text-xs font-bold rounded-sm cursor-pointer"
               >
                 View Gallery <ArrowRight size={18} />
               </a>
